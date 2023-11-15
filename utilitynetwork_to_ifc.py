@@ -147,6 +147,7 @@ storey = model.by_type('IfcBuildingStorey')[0]
 
 # Create connected pipes from each feature graph and add them to an IfcSystem entity
 for feat_graph_pts in feat_graphs_points:
+    feat_graph_pts[:,2] += ref_point[2]
     pipes, first_port, last_port = cp.create_connected_pipes(model, feat_graph_pts, r =args.radius, storey=storey,lod=int(args.lod))
     cp.create_system_from_pipes(model, pipes,port_a = first_port, port_b = last_port)
     

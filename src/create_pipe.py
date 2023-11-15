@@ -199,7 +199,8 @@ def create_connected_pipes(ifc_file,
     assert direction in ['forward', 'none', None]
     if owner_history is None: owner_history = ifc_file.by_type('IfcOwnerHistory')[0]
     
-
+    # points = np.unique(points, axis=1)
+    
     # r
     assert isinstance(r, float) or isinstance(r, list)
     if isinstance(r, list): assert len(r) == (len(points)-1)
@@ -220,7 +221,7 @@ def create_connected_pipes(ifc_file,
     for i in range(len(points)-1):
         a = points[i]
         b = points[i+1] 
-
+        if sum(a-b) == 0: continue
         pipe = create_pipe(ifc_file, r[i], points[i].tolist(), (points[i+1]-points[i]).tolist(),name[i],description[i],storey=storey,lod=lod,type=type)
         
         def rel_placement_to_port(rel_placement, flow_direction):
